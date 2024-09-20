@@ -1,0 +1,39 @@
+import numpy as np
+import scipy.linalg as la
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Matriz de coeficientes A y vector de términos independientes b
+A = np.array([[8, 4, -1], 
+              [-2, 5, 1], 
+              [2, -1, 6]])
+
+b = np.array([11, 4, 7])
+
+# Descomposición LU sin pivoteo
+P, L, U = la.lu(A)
+
+# Resolver Ly = b
+y = la.solve(L, b)
+
+# Resolver Ux = y
+x = la.solve(U, y)
+
+# Imprimir la solución
+print(f"La solución es: x1 = {x[0]}, x2 = {x[1]}, x3 = {x[2]}")
+
+# Gráfico 3D
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+# Etiquetas de los ejes
+ax.set_xlabel('x1')
+ax.set_ylabel('x2')
+ax.set_zlabel('x3')
+
+# Puntos de la solución
+ax.scatter(x[0], x[1], x[2], color='r', s=100, label="Solución")
+
+# Mostrar gráfico
+plt.legend()
+plt.show()
